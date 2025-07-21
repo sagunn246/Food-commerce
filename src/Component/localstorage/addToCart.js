@@ -1,3 +1,4 @@
+import addQuantity from "./addQuantity";
 const addToCart =(productData) =>{
     let localData = localStorage.getItem('cart')
 
@@ -9,7 +10,13 @@ const addToCart =(productData) =>{
 
     else{
         let tempArr =JSON.parse(localStorage.getItem("cart"));
-        tempArr.push({...productData, quantity: 1})
+       
+       let tempArray= tempArr.filter((item)=>item.id==productData.id)
+       if(tempArray !=0){
+        addQuantity(productData)
+        return;
+       }
+         tempArr.push({...productData, quantity: 1})
         localStorage.setItem("cart", JSON.stringify(tempArr))
     }
 }

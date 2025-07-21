@@ -11,7 +11,7 @@ const Product = () => {
 
   return (
     <div className="px-5 py-3 flex flex-wrap gap-6 max-h-6xl justify-center">
-      <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-2 xl:grid-cols-4 gap-10">
+      <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-2 xl:grid-cols-5 gap-10">
             {productData.map((item) => (
         <Card data={item} key={item.id} />
       ))}

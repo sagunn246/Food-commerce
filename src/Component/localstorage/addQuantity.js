@@ -1,4 +1,3 @@
-
 const addQuantity = (data, setCart) => {
   const localData= JSON.parse(localStorage.getItem("cart"));
   const index= localData.findIndex((item)=> item.id == data.id);
