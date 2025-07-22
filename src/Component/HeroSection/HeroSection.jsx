@@ -1,7 +1,7 @@
 const HeroSection = () => {
   return (
     <div className="m-3 md:m-7">
-      <div className="relative overflow-hidden rounded-lg  bg-gradient-to-b from-black/40 to-black sm:h-[600px] md:h-[750px] lg:h-[900px] flex items-center py-10 sm:py-14 md:py-16 px-4 sm:px-8 md:px-10">
+      <div className="relative overflow-hidden rounded-lg  bg-gradient-to-b from-black/20 to-black/40 sm:h-[600px] md:h-[750px] lg:h-[900px] flex items-center py-10 sm:py-14 md:py-16 px-4 sm:px-8 md:px-10">
 
         <video
           autoPlay
@@ -10,13 +10,13 @@ const HeroSection = () => {
           playsInline
           className="absolute top-0 left-0 w-full h-full object-cover -z-10"
         >
-          <source src="./Lol.mp4" type="video/mp4" />
+          <source src="./video.mp4" type="video/mp4" />
         </video>
 
 
         <div className="p-4 sm:p-6 md:p-8 rounded-lg w-full max-w-screen-xl z-10">
           <div className="text-white font-bold text-xl sm:text-3xl md:text-4xl lg:text-6xl leading-snug">
-            <p className="m-0 p-0">Order your</p>
+            <p className="m-0 p-0 ">Order your</p>
             <p className="m-0 p-0">
               <span className="text-transparent bg-gradient-to-r from-yellow-400 to-orange-500 bg-clip-text">
                 Favorite Food

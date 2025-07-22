@@ -1,5 +1,6 @@
-import React, { useRef, useState } from 'react'
-import TextInput from '../../InputFields/TextInput'
+import React, { useRef, useState } from 'react';
+import { useNavigate } from 'react-router-dom';
+import TextInput from '../../InputFields/TextInput';
 import OrangeButton from '../../Button/OrangeButton';
 
 const UserDetails = () => {
@@ -7,11 +8,13 @@ const UserDetails = () => {
     const name = useRef();
     const contact = useRef();
     const address = useRef();
+    const navigate = useNavigate();
 
     const handleClick = () => {
         const nameVal = name.current?.value?.trim();
         const contactVal = contact.current?.value?.trim();
         const addressVal = address.current?.value?.trim();
+
         const nameRegex = /^[A-Za-z\s]{2,}$/;
         const contactRegex = /^[0-9]{7,15}$/;
         const addressRegex = /^.{3,}$/;
@@ -24,17 +27,48 @@ const UserDetails = () => {
             setError(3);
         } else {
             setError(0);
+
+            // Navigate back and then to /cart
+            setTimeout(() => {
+                navigate(-1); // Go back
+                setTimeout(() => {
+                    navigate('/'); // Then go to cart
+                }, 200); // Short delay to simulate transition
+            }, 0);
         }
     };
 
     return (
         <div>
-            <div>  <TextInput label={"Name:"} placeholder={"Enter your name"} ref={name} error={error == 1 && true} /></div>
-            <div>  <TextInput label={"Contact:"} placeholder={"Enter your contact "} ref={contact} error={error == 2 && true} /></div>
-            <div>  <TextInput label={"Address:"} placeholder={"Enter your address "} ref={address} error={error == 3 && true} /></div>
-            <div className='flex justify-center mt-15'><OrangeButton title={"Proceed"} onClick={() => handleClick((prev)=>!prev)} /></div>
+            <div>
+                <TextInput
+                    label="Name:"
+                    placeholder="Enter your name"
+                    ref={name}
+                    error={error === 1}
+                />
+            </div>
+            <div>
+                <TextInput
+                    label="Contact:"
+                    placeholder="Enter your contact"
+                    ref={contact}
+                    error={error === 2}
+                />
+            </div>
+            <div>
+                <TextInput
+                    label="Address:"
+                    placeholder="Enter your address"
+                    ref={address}
+                    error={error === 3}
+                />
+            </div>
+            <div className="flex justify-center mt-15">
+                <OrangeButton title="Proceed" onClick={handleClick} />
+            </div>
         </div>
-    )
-}
+    );
+};
 
-export default UserDetails
+export default UserDetails;
