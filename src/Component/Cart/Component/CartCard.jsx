@@ -3,34 +3,45 @@ import { RiDeleteBin5Line } from "react-icons/ri";
 import removeFromCart from '../../localstorage/removeFromCart';
 import Quantity from './Quantity';
 import OrangeButton from '../../Button/OrangeButton';
+
 const CartCard = ({ item, setCart }) => {
-  
     return (
-        <div>
-<div className='border border-gray-200 max-w-7xl mx-auto shadow-lg pt-4 px-6 pb-4 rounded-lg'>
-    <div className='flex justify-between items-center gap-10'>
-        <img src={item?.image} alt={item?.name} className='h-48 w-48 rounded-2xl object-cover p-2' />
+        <div className="mb-2">
+            <div className='border m-auto border-gray-200 shadow-sm hover:shadow-md transition-shadow duration-200 p-3 rounded-lg bg-white max-w-sm w-full'>
+                <div className='flex items-center gap-3'>
+                    {/* Image */}
+                    <img
+                        src={item?.image}
+                        alt={item?.name}
+                        className='h-16 w-16 rounded-lg object-cover flex-shrink-0'
+                    />
 
-        <div className='flex-1'>
-            <div className='text-2xl font-bold mb-2'>{item?.name}</div>
-            <div className='text-gray-500 text-sm mb-4'>{item?.mealType}</div>
-            <div className='text-red-500 text-2xl font-bold mb-6'>$ {item?.caloriesPerServing}</div>
-         
-            <OrangeButton title={"Order now"} />
-              
-              <div className='flex justify-center'>
-                 <Quantity quantity={item?.quantity} data={item} setCart={setCart}/>
+                    {/* Content */}
+                    <div className='flex-1 min-w-0'>
+                        <div className='flex items-start justify-between gap-2'>
+                            <div className='flex-1 min-w-0'>
+                                <h3 className='text-sm font-semibold text-gray-800 truncate'>{item?.name}</h3>
+                                <span className='inline-block bg-gray-100 px-2 py-0.5 rounded-full text-xs text-gray-600 mt-1'>{item?.mealType}</span>
+                                <div className='text-orange-600 text-sm font-bold mt-1'>$ {item?.caloriesPerServing}</div>
+                            </div>
+                            
+                            {/* Delete button */}
+                            <RiDeleteBin5Line
+                                className='text-lg text-gray-400 hover:text-red-500 cursor-pointer transition-colors duration-200 flex-shrink-0'
+                                onClick={() => removeFromCart(item, setCart)}
+                            />
+                        </div>
+
+                        {/* Quantity and Order button */}
+                        <div className='flex items-center justify-between mt-2 gap-2'>
+                            <Quantity quantity={item?.quantity} data={item} setCart={setCart} />
+                            <div className='flex-shrink-0'>
+                                <OrangeButton title={"Order"} />
+                            </div>
+                        </div>
+                    </div>
+                </div>
             </div>
-        </div>
- 
-        <RiDeleteBin5Line
-            className='text-3xl text-red-500 cursor-pointer hover:text-red-700 transition'
-            onClick={() => removeFromCart(item, setCart, )}
-        />
-       
-    </div>
-</div>
-
         </div>
     )
 };

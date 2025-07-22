@@ -1,90 +1,40 @@
-const CheckOutModal = ({ visible, setVisible }) => {
+import UserDetails from "./UserDetails";
+import totalAmount from "../../CustomFunction/totalAmount";
+import TextInput from "../../InputFields/TextInput";
+
+const CheckOutModal = ({ visible, setVisible, product }) => {
   return (
-    <div className="fixed inset-0 flex justify-center items-center bg-black/50 z-50 p-4">
-      <div className="bg-white w-full max-w-2xl p-8 rounded-2xl shadow-2xl">
-        <h2 className="text-3xl font-bold text-gray-800 mb-6 text-center">Checkout Complete</h2>
+    <div className="fixed inset-0 flex justify-center items-center bg-black/50 z-50 p-2 sm:p-4">
+      <div className="bg-white w-full max-w-md sm:max-w-lg lg:max-w-xl p-4 sm:p-6 lg:p-8 rounded-2xl shadow-2xl max-h-[90vh] overflow-y-auto">
+        <h2 className="text-xl sm:text-2xl lg:text-3xl font-bold text-gray-800 mb-4 sm:mb-6 text-center">Checkout Verification</h2>
+        
+        <div>
+          <span className="text-lg sm:text-xl lg:text-2xl text-gray-800 block mb-3 sm:mb-4">Items</span>
 
-        <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
-          <div>
-            <label className="block mb-2 font-semibold text-gray-700">Full name</label>
-            <input
-              type="text"
-              placeholder="Enter your first and last name"
-              className="w-full border border-gray-300 rounded-lg px-4 py-3 focus:outline-none focus:ring-2 focus:ring-orange-500 focus:border-transparent transition-all duration-200"
-            />
+          <div className="space-y-2 sm:space-y-3 max-h-40 sm:max-h-48 overflow-y-auto">
+            {product.map((data, index) => (
+              <div key={index}>
+                <div className="flex flex-col sm:flex-row sm:justify-between sm:items-center bg-gray-50 p-2 sm:p-3 rounded-lg gap-1 sm:gap-2">
+                  <span className="font-medium text-gray-900 text-sm sm:text-base flex-1">{data?.name}</span>
+                  <div className="flex justify-between sm:justify-end sm:gap-4 text-sm">
+                    <div className="text-gray-600">
+                      Qty: {data?.quantity}
+                    </div>
+                    <div className="text-gray-500 font-medium">${data?.caloriesPerServing}</div>
+                  </div>
+                </div>
+              </div>
+            ))}
           </div>
 
-          <div>
-            <label className="block mb-2 font-semibold text-gray-700">Region</label>
-            <input
-              type="text"
-              placeholder="Please enter your region"
-              className="w-full border border-gray-300 rounded-lg px-4 py-3 focus:outline-none focus:ring-2 focus:ring-orange-500 focus:border-transparent transition-all duration-200"
-            />
-          </div>
-
-          <div>
-            <label className="block mb-2 font-semibold text-gray-700">Phone Number</label>
-            <input
-              type="tel"
-              placeholder="Please enter your phone number"
-              className="w-full border border-gray-300 rounded-lg px-4 py-3 focus:outline-none focus:ring-2 focus:ring-orange-500 focus:border-transparent transition-all duration-200"
-            />
-          </div>
-
-          <div>
-            <label className="block mb-2 font-semibold text-gray-700">City</label>
-            <input
-              type="text"
-              placeholder="Please enter your city"
-              className="w-full border border-gray-300 rounded-lg px-4 py-3 focus:outline-none focus:ring-2 focus:ring-orange-500 focus:border-transparent transition-all duration-200"
-            />
-          </div>
-
-          <div>
-            <label className="block mb-2 font-semibold text-gray-700">Building / House No / Floor / Street</label>
-            <input
-              type="text"
-              placeholder="Please enter"
-              className="w-full border border-gray-300 rounded-lg px-4 py-3 focus:outline-none focus:ring-2 focus:ring-orange-500 focus:border-transparent transition-all duration-200"
-            />
-          </div>
-
-          <div>
-            <label className="block mb-2 font-semibold text-gray-700">Area</label>
-            <input
-              type="text"
-              placeholder="Please enter your area"
-              className="w-full border border-gray-300 rounded-lg px-4 py-3 focus:outline-none focus:ring-2 focus:ring-orange-500 focus:border-transparent transition-all duration-200"
-            />
-          </div>
-
-          <div className="md:col-span-2">
-            <label className="block mb-2 font-semibold text-gray-700">Colony / Suburb / Locality / Landmark</label>
-            <input
-              type="text"
-              placeholder="Please enter"
-              className="w-full border border-gray-300 rounded-lg px-4 py-3 focus:outline-none focus:ring-2 focus:ring-orange-500 focus:border-transparent transition-all duration-200"
-            />
-          </div>
-
-          <div className="md:col-span-2">
-            <label className="block mb-2 font-semibold text-gray-700">Address</label>
-            <input
-              type="text"
-              placeholder="For Example: House# 123, Street# 123, ABC Road"
-              className="w-full border border-gray-300 rounded-lg px-4 py-3 focus:outline-none focus:ring-2 focus:ring-orange-500 focus:border-transparent transition-all duration-200"
-            />
+          <div className="flex justify-between items-center pt-3 sm:pt-4 mt-3 sm:mt-4 border-t border-gray-200">
+            <div className="font-bold text-base sm:text-lg">Total</div>
+            <div className="font-bold text-base sm:text-lg text-green-600">${totalAmount(product)}</div>
           </div>
         </div>
-
-        <div className="flex justify-center mt-8">
-          <button
-            className="px-8 py-3 bg-green-600 text-white font-semibold rounded-lg hover:bg-green-700 focus:outline-none focus:ring-4 focus:ring-green-200 transition-all duration-200 shadow-lg hover:shadow-xl transform hover:-translate-y-0.5"
-            onClick={() => setVisible((prev) => !prev)}
-          >
-            Continue
-          </button>
+        
+        <div className="mt-4 sm:mt-6">
+          <UserDetails />
         </div>
       </div>
     </div>

@@ -1,10 +1,18 @@
 import React from 'react'
 
-const OrangeButton = ({title, ...props}) => {
+const OrangeButton = ({ title, ...props }) => {
   return (
-    <div >
-    <button className='bg-orange-500 hover:bg-amber-500 cursor-pointer text-white px-5 py-3  rounded-xl' {...props} >{title}</button>
-      
+    <div>
+      <button
+        className="bg-orange-500 hover:bg-amber-500 text-white rounded-xl cursor-pointer 
+                   text-sm px-4 py-2
+                   sm:text-base sm:px-5 sm:py-2.5
+                   md:text-lg md:px-6 md:py-3
+                   transition duration-200"
+        {...props}
+      >
+        {title}
+      </button>
     </div>
   )
 }
