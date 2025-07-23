@@ -3,12 +3,12 @@ import { useNavigate } from 'react-router-dom';
 import TextInput from '../../InputFields/TextInput';
 import OrangeButton from '../../Button/OrangeButton';
 
-const UserDetails = () => {
+
+const UserDetails = ({ setVisible }) => {
     const [error, setError] = useState(0);
     const name = useRef();
     const contact = useRef();
     const address = useRef();
-    const navigate = useNavigate();
 
     const handleClick = () => {
         const nameVal = name.current?.value?.trim();
@@ -28,18 +28,16 @@ const UserDetails = () => {
         } else {
             setError(0);
 
-            // Navigate back and then to /cart
-            setTimeout(() => {
-                navigate(-1); // Go back
-                setTimeout(() => {
-                    navigate('/'); // Then go to cart
-                }, 200); // Short delay to simulate transition
-            }, 0);
+
         }
+        setVisible((prev) => !prev)
     };
 
+
+
     return (
-        <div>
+        <div className="relative p-4">
+
             <div>
                 <TextInput
                     label="Name:"
