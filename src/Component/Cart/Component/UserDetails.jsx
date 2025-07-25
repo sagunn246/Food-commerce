@@ -28,9 +28,9 @@ const UserDetails = ({ setVisible }) => {
         } else {
             setError(0);
 
-
+            setVisible((prev) => !prev);
         }
-        setVisible((prev) => !prev)
+
     };
 
 

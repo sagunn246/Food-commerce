@@ -14,7 +14,7 @@ function App() {
   }, []);
   return (
     <div className="">
-      <NavBar />
+      <NavBar setProductData={setProductData} MainData={MainData} />
       <HeroSection />
       <Categories setProductData={setProductData} MainData={MainData} />
       <Product productData={productData} MainData={MainData} />

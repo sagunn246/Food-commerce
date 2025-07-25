@@ -1,12 +1,13 @@
 import React from "react";
 import { MdOutlineShoppingCart } from "react-icons/md";
-import { IoSearch } from "react-icons/io5";
 import { NavLink, useNavigate } from "react-router";
+import Search from "./Search";
 
-const NavBar = () => {
+const NavBar = ({ MainData, setProductData }) => {
   const navigate = useNavigate();
+
   return (
-    <div className="flex flex-wrap justify-between items-center px-3 py-2 md:px-6 md:py-4 bg-white  rounded-md gap-3">
+    <div className="flex flex-wrap justify-between items-center px-3 py-2 md:px-6 md:py-4 bg-white fixed top-0 left-0 right-0 z-50 w-full rounded-md gap-3 shadow-md">
       <div className="flex-shrink-0">
         <img
           src="./ab.png"
@@ -17,14 +18,7 @@ const NavBar = () => {
       </div>
 
       <div className="flex items-center gap-2 sm:gap-4 md:gap-6 flex-grow justify-end">
-        <div className="flex items-center border border-gray-300 rounded-sm">
-          <input
-            type="text"
-            className="outline-none p-1 text-xs sm:text-sm md:text-base w-24 sm:w-40 md:w-52"
-            placeholder="Search..."
-          />
-          <IoSearch className="mr-2 text-base sm:text-lg" />
-        </div>
+        <Search MainData={MainData} setProductData={setProductData} />
 
         <MdOutlineShoppingCart
           className="text-2xl sm:text-3xl md:text-4xl cursor-pointer text-gray-600"

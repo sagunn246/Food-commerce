@@ -19,7 +19,7 @@ const Categories = ({ setProductData, MainData }) => {
     }
   }
   return (
-    <div className="my-4 mx-3 md:mx-8">
+    <div className="my-4 mx-3 md:mx-8 relative top-20">
       <div className="text-black font-bold md:text-3xl">Categories</div>
       <div className="w-fit flex gap-7 md:gap-16 lg:gap-28 mx-auto my-4 ">
         {icons.map((item) => (

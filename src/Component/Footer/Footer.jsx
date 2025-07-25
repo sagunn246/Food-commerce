@@ -4,7 +4,7 @@ import { FaMapMarkerAlt, FaPhoneAlt, FaEnvelope } from 'react-icons/fa'
 const Footer = () => {
   return (
     <div>
-      <div className='bg-gray-900 h-auto md:h-full'>
+      <div className='bg-gray-900 h-auto md:h-full relative top-20'>
         <div className='text-xl md:text-2xl items-center italic gap-1 flex text-white pt-2 ml-4 md:ml-9'>
           <img src='ab.png' alt='' className='h-10 w-10 rounded-3xl' />
           <p className='ml-3'>Daddy's Kitchen</p>

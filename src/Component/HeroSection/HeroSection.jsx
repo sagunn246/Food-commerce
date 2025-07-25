@@ -1,7 +1,7 @@
 const HeroSection = () => {
   return (
-    <div className="m-3 md:m-7">
-      <div className="relative overflow-hidden rounded-lg  bg-gradient-to-b from-black/20 to-black/40 sm:h-[600px] md:h-[750px] lg:h-[900px] flex items-center py-10 sm:py-14 md:py-16 px-4 sm:px-8 md:px-10">
+    <div className="m-3 md:m-7 relative top-20">
+      <div className="relative  overflow-hidden rounded-lg  bg-gradient-to-b from-black/20 to-black/40 sm:h-[600px] md:h-[750px] lg:h-[900px] flex items-center py-10 sm:py-14 md:py-16 px-4 sm:px-8 md:px-10">
 
         <video
           autoPlay
