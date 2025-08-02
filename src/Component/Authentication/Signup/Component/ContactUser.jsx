@@ -1,54 +1,72 @@
 import React, { useRef, useState } from "react";
 import TextInput from "../../../InputFields/TextInput";
 import OrangeButton from "../../../Button/OrangeButton";
+
 const ContactUser = ({ userDetail, setUserDetail, setStage }) => {
   const nameRef = useRef();
   const emailRef = useRef();
   const contactRef = useRef();
-  const errorRef = useRef();
 
-  const [error, setError] = useState(0);
+  const [errorType, setErrorType] = useState(0);
+  const [errorMessage, setErrorMessage] = useState("");
+
   const handleClick = () => {
-    if (nameRef.current.value == "") {
-      setError(1);
-      errorRef.current = "Please enter your name";
-    } else if (contactRef.current.value == "") {
-      setError(2);
-    } else if (emailRef.current.value == "") {
-      setError(3);
+    if (!nameRef.current.value.trim()) {
+      setErrorType(1);
+      setErrorMessage("Please enter your name.");
+    } else if (!emailRef.current.value.trim()) {
+      setErrorType(2);
+      setErrorMessage("Please enter your email address.");
+    } else if (!/^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(emailRef.current.value)) {
+      setErrorType(2);
+      setErrorMessage("Please enter a valid email address.");
+    } else if (!contactRef.current.value.trim()) {
+      setErrorType(3);
+      setErrorMessage("Please enter your contact number.");
     } else {
-      setError(0);
-      setUserDetail({
-        username: nameRef.current.value,
-        email: emailRef.current.value,
-        contactNumber: contactRef.current.value,
-      });
+      setErrorType(0);
+      setErrorMessage("");
+      setUserDetail((prevDetails) => ({
+        ...prevDetails,
+        username: nameRef.current.value.trim(),
+        email: emailRef.current.value.trim(),
+        contactNumber: contactRef.current.value.trim(),
+      }));
       setStage(2);
     }
   };
 
   return (
-    <div className="flex flex-col gap-4 justify-center items-center relative top-5">
+    <div className="flex flex-col gap-5 p-4">
+      <h3 className="text-2xl font-semibold text-gray-800 text-center mb-4">
+        Contact Information
+      </h3>
       <TextInput
-        label={"Name"}
-        placeholder={"Enter your Name"}
-        errormessage={errorRef.current}
+        label="Name"
+        placeholder="Your full name"
+        errormessage={errorType === 1 ? errorMessage : ""}
         ref={nameRef}
-        error={error == 1 && true}
+        error={errorType === 1}
       />
       <TextInput
-        label={"Email"}
-        placeholder={"Enter your email"}
+        label="Email"
+        type="email"
+        placeholder="your@example.com"
+        errormessage={errorType === 2 ? errorMessage : ""}
         ref={emailRef}
-        error={error == 2 && true}
+        error={errorType === 2}
       />
       <TextInput
-        label={"Contact Number"}
-        placeholder={"Enter your contact"}
+        label="Contact Number"
+        type="tel"
+        placeholder="e.g., 98XXXXXXXX"
+        errormessage={errorType === 3 ? errorMessage : ""}
         ref={contactRef}
-        error={error == 3 && true}
+        error={errorType === 3}
       />
-      <OrangeButton title={"Proceed"} onClick={() => handleClick()} />
+      <div className="w-full mt-4">
+        <OrangeButton title="Proceed" onClick={handleClick} />
+      </div>
     </div>
   );
 };

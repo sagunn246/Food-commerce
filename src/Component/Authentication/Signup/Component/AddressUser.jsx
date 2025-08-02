@@ -1,67 +1,71 @@
-import React from "react";
+import React, { useRef, useState } from "react";
 import TextInput from "../../../InputFields/TextInput";
 import OrangeButton from "../../../Button/OrangeButton";
-import { useState } from "react";
-import { useRef } from "react";
 
 const AddressUser = ({ userDetail, setUserDetail, setStage }) => {
   const cityRef = useRef();
   const streetRef = useRef();
-  const [error, setError] = useState(0);
   const deliveryDescriptionRef = useRef();
-  const errorMessageRef = useRef();
+
+  const [errorType, setErrorType] = useState(0);
+  const [errorMessage, setErrorMessage] = useState("");
+
   const handleNext = () => {
-    if (cityRef.current.value == "" || cityRef.current.value.length < 2) {
-      errorMessageRef.current = "Name should be provided Correctly";
-      setError(1);
-    } else if (streetRef.current.value == "") {
-      errorMessageRef.current = "Provide Valid State";
-      setError(2);
-    } else if (deliveryDescriptionRef.current.value == "") {
-      errorMessageRef.current = "Provide Valid description";
-      setError(3);
+    if (
+      !cityRef.current.value.trim() ||
+      cityRef.current.value.trim().length < 2
+    ) {
+      setErrorType(1);
+      setErrorMessage(
+        "Please enter a valid city name (at least 2 characters)."
+      );
+    } else if (!streetRef.current.value.trim()) {
+      setErrorType(2);
+      setErrorMessage("Please enter a valid street address.");
+    } else if (!deliveryDescriptionRef.current.value.trim()) {
+      setErrorType(3);
+      setErrorMessage("Please provide a delivery description.");
     } else {
-      setError(0);
-      errorMessageRef.current = null;
-      let username = userDetail.username;
-      let contactNumber = userDetail.contactNumber;
-      let email = userDetail.email;
-      setUserDetail({
-        username: username,
-        contactNumber: contactNumber,
-        email: email,
-        city: cityRef.current.value,
-        street: streetRef.current.value,
-        deliveryDescription: deliveryDescriptionRef.current.value,
-      });
+      setErrorType(0);
+      setErrorMessage("");
+      setUserDetail((prevDetails) => ({
+        ...prevDetails,
+        city: cityRef.current.value.trim(),
+        street: streetRef.current.value.trim(),
+        deliveryDescription: deliveryDescriptionRef.current.value.trim(),
+      }));
       setStage(3);
     }
   };
+
   return (
-    <div>
+    <div className="flex flex-col gap-5 p-4">
+      <h3 className="text-2xl font-semibold text-gray-800 text-center mb-4">
+        Delivery Address
+      </h3>
       <TextInput
-        error={error == 1 && true}
-        label={"city"}
-        placeholder={"Enter city"}
+        label="City"
+        placeholder="e.g., Pokhara"
+        errormessage={errorType === 1 ? errorMessage : ""}
         ref={cityRef}
-        errormessage={"errormessageRef"}
+        error={errorType === 1}
       />
       <TextInput
-        error={error == 2 && true}
-        label={"Street"}
-        placeholder={"Enter street"}
+        label="Street"
+        placeholder="e.g., Lakeside Road"
+        errormessage={errorType === 2 ? errorMessage : ""}
         ref={streetRef}
-        errormessage={"errormessageRef"}
+        error={errorType === 2}
       />
       <TextInput
-        error={error == 3 && true}
-        label={"Delivery Description"}
-        placeholder={"Enter Delivery Description"}
+        label="Delivery Description (Optional)"
+        placeholder="e.g., Near ABC Mart, 3rd floor"
+        errormessage={errorType === 3 ? errorMessage : ""}
         ref={deliveryDescriptionRef}
-        errormessage={"errormessageRef"}
+        error={errorType === 3}
       />
-      <div>
-        <OrangeButton title={"Proceed"} onClick={() => handleNext()} />
+      <div className="w-full mt-4">
+        <OrangeButton title="Proceed" onClick={handleNext} />
       </div>
     </div>
   );

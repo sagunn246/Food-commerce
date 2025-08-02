@@ -1,66 +1,63 @@
 import OrangeButton from "../../../Button/OrangeButton";
-import { useRef } from "react";
-import { useState } from "react";
+import { useRef, useState } from "react";
 import TextInput from "../../../InputFields/TextInput";
 import signApi from "../../../Api/Auth/signApi";
+import { useNavigate } from "react-router-dom";
 
-const PasswordUser = ({ userDetail, setUserDetail, setstage }) => {
+const PasswordUser = ({ userDetail, setUserDetail, setStage }) => {
+  const navigate = useNavigate();
   const passwordRef = useRef();
-  const errorMessageRef = useRef();
-  const conformpasswordRef = useRef();
-  const [error, setError] = useState();
+  const confirmPasswordRef = useRef();
+  const [error, setError] = useState(null);
+  const [errorMessage, setErrorMessage] = useState("");
 
   const handleProceed = () => {
-    if (
-      passwordRef.current.value == "" ||
-      passwordRef.current.value.length < 2
-    ) {
-      errorMessageRef.current = "password should be provided Correctly";
+    const password = passwordRef.current.value;
+    const confirmPassword = confirmPasswordRef.current.value;
+
+    if (!password || password.length < 2) {
       setError(1);
-    } else if (conformpasswordRef.current.value !== passwordRef.current.value) {
-      errorMessageRef.current = "Password and Conform Password Does't match";
-      setError(2);
-      console.log(errorMessageRef.current);
-    } else {
-      setError(0);
-      let username = userDetail.username;
-      let email = userDetail.email;
-      let contactNumber = userDetail.contactNumber;
-      let city = userDetail.city;
-      let street = userDetail.street;
-      let deliveryDescription = userDetail.deliveryDescription;
-      errorMessageRef.current = null;
-      setUserDetail({
-        username: username,
-        email: email,
-        contactNumber: contactNumber,
-        password: passwordRef.current.value,
-        city: city,
-        street: street,
-        deliveryDescription: deliveryDescription,
-      });
-      signApi(userDetail);
+      setErrorMessage("Password should be at least 2 characters long");
+      return;
     }
+
+    if (confirmPassword !== password) {
+      setError(2);
+      setErrorMessage("Password and Confirm Password don't match");
+      return;
+    }
+
+    setError(null);
+    setErrorMessage("");
+
+    const updatedDetails = {
+      ...userDetail,
+      password: password,
+    };
+
+    setUserDetail(updatedDetails);
+
+    // ✅ Pass setStage correctly
+    signApi(updatedDetails, setStage, setUserDetail, navigate);
   };
+
   return (
-    <div>
-      <div className="flex flex-col gap-4 justify-center items-center relative top-5">
-        <TextInput
-          label={"Password"}
-          placeholder={"Enter your password"}
-          ref={passwordRef}
-          error={error == 1 && true}
-          errorMessage={errorMessageRef.current}
-        />
-        <TextInput
-          label={"Confirm Password"}
-          placeholder={"Enter your password"}
-          ref={conformpasswordRef}
-          error={error == 2 && true}
-          errorMessage={errorMessageRef.current}
-        />
-        <OrangeButton title={"Proceed"} onClick={() => handleProceed()} />
-      </div>
+    <div className="flex flex-col gap-4 justify-center items-center relative top-5">
+      <TextInput
+        label="Password"
+        placeholder="Enter your password"
+        ref={passwordRef}
+        error={error === 1}
+        errorMessage={error === 1 ? errorMessage : ""}
+      />
+      <TextInput
+        label="Confirm Password"
+        placeholder="Confirm your password"
+        ref={confirmPasswordRef}
+        error={error === 2}
+        errorMessage={error === 2 ? errorMessage : ""}
+      />
+      <OrangeButton title="Proceed" onClick={handleProceed} />
     </div>
   );
 };

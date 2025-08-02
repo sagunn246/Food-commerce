@@ -1,8 +1,8 @@
-import React from "react";
 import { useState } from "react";
 import ContactUser from "./Component/ContactUser";
 import PasswordUser from "./Component/PasswordUser";
 import AddressUser from "./Component/AddressUser";
+
 const Signup = () => {
   const [userDetail, setUserDetail] = useState({
     username: "",
@@ -12,6 +12,7 @@ const Signup = () => {
     city: "",
     street: "",
     deliveryDescription: "",
+    role: "",
   });
   const [stage, setStage] = useState(1);
   console.log(userDetail);
