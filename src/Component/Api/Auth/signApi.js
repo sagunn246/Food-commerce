@@ -1,26 +1,34 @@
-import SecureFetch from "./ApiConfiguration";
+import SecureFetch from "./apiConfiguration";
 
-const signApi = async (userDetail, setStage, setUserDetail, navigate) => {
+const signApi = async (
+  userDetail,
+  setStage,
+  setUserDetail,
+  navigate,
+  setError
+) => {
   try {
-    const request = await SecureFetch(
+    const { status, data } = await SecureFetch(
       "http://localhost:3000/auth/signup",
-      "POST", // Ensure method is uppercase
+      "POST",
       {
-        "Content-Type": "application/json", // Proper casing
+        "Content-Type": "application/json",
       },
       userDetail
     );
 
-    const response = await request.json();
+    console.log("response", data);
 
-    if (request.status === 200) {
-      localStorage.setItem("token", response.token);
-      localStorage.setItem("userDetails", JSON.stringify(response));
-      navigate("/");
+    if (status === 200 || status === 201) {
+      localStorage.setItem("token", data.token);
+      localStorage.setItem("userDetails", JSON.stringify(data.user));
+      window.location.href = "/";
     } else {
-      throw new Error("Signup failed");
+      throw new Error(`Signup failed: ${data.message}`);
     }
   } catch (error) {
+    console.error("Signup Error:", error.message);
+    setError(error.message);
     setUserDetail({
       username: "",
       contactNumber: "",
@@ -31,7 +39,6 @@ const signApi = async (userDetail, setStage, setUserDetail, navigate) => {
       deliveryDescription: "",
     });
     setStage(0);
-    console.error("Signup Error:", error.message);
   }
 };
 

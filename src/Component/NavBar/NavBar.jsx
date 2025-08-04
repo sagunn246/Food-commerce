@@ -1,6 +1,7 @@
 import React from "react";
 import { MdOutlineShoppingCart } from "react-icons/md";
 import { NavLink, useNavigate } from "react-router";
+import { IoSettingsOutline } from "react-icons/io5";
 import Search from "./Search";
 
 const NavBar = ({ MainData, setProductData }) => {
@@ -24,6 +25,10 @@ const NavBar = ({ MainData, setProductData }) => {
           className="text-2xl sm:text-3xl md:text-4xl cursor-pointer text-gray-600"
           onClick={() => navigate("/cart")}
         />
+        <div className="text-3xl" onClick={() => navigate("/setting")}>
+          {" "}
+          <IoSettingsOutline />
+        </div>
       </div>
     </div>
   );

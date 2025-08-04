@@ -8,57 +8,76 @@ const PasswordUser = ({ userDetail, setUserDetail, setStage }) => {
   const navigate = useNavigate();
   const passwordRef = useRef();
   const confirmPasswordRef = useRef();
-  const [error, setError] = useState(null);
-  const [errorMessage, setErrorMessage] = useState("");
 
-  const handleProceed = () => {
+  const [fieldError, setFieldError] = useState(null);
+  const [fieldErrorMessage, setFieldErrorMessage] = useState("");
+  const [formErrorMessage, setFormErrorMessage] = useState("");
+
+  const handleSubmit = (e) => {
+    e.preventDefault();
+
     const password = passwordRef.current.value;
     const confirmPassword = confirmPasswordRef.current.value;
 
     if (!password || password.length < 2) {
-      setError(1);
-      setErrorMessage("Password should be at least 2 characters long");
+      setFieldError(1);
+      setFieldErrorMessage("Password should be at least 2 characters long");
       return;
     }
 
     if (confirmPassword !== password) {
-      setError(2);
-      setErrorMessage("Password and Confirm Password don't match");
+      setFieldError(2);
+      setFieldErrorMessage("Password and Confirm Password don't match");
       return;
     }
 
-    setError(null);
-    setErrorMessage("");
+    setFieldError(null);
+    setFieldErrorMessage("");
+    setFormErrorMessage("");
 
     const updatedDetails = {
       ...userDetail,
-      password: password,
+      password,
     };
 
     setUserDetail(updatedDetails);
 
-    // ✅ Pass setStage correctly
-    signApi(updatedDetails, setStage, setUserDetail, navigate);
+    signApi(
+      updatedDetails,
+      setStage,
+      setUserDetail,
+      navigate,
+      setFormErrorMessage
+    );
   };
 
   return (
-    <div className="flex flex-col gap-4 justify-center items-center relative top-5">
+    <form
+      onSubmit={handleSubmit}
+      className="flex flex-col gap-4 justify-center items-center relative top-5 w-full max-w-sm"
+    >
+      {formErrorMessage && (
+        <div className="text-red-500 text-sm mb-2 text-center">
+          {formErrorMessage}
+        </div>
+      )}
+
       <TextInput
         label="Password"
         placeholder="Enter your password"
         ref={passwordRef}
-        error={error === 1}
-        errorMessage={error === 1 ? errorMessage : ""}
+        error={fieldError === 1}
+        errorMessage={fieldError === 1 ? fieldErrorMessage : ""}
       />
       <TextInput
         label="Confirm Password"
         placeholder="Confirm your password"
         ref={confirmPasswordRef}
-        error={error === 2}
-        errorMessage={error === 2 ? errorMessage : ""}
+        error={fieldError === 2}
+        errorMessage={fieldError === 2 ? fieldErrorMessage : ""}
       />
-      <OrangeButton title="Proceed" onClick={handleProceed} />
-    </div>
+      <OrangeButton title="Proceed" type="submit" />
+    </form>
   );
 };
 

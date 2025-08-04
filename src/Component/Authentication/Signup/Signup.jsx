@@ -3,7 +3,7 @@ import ContactUser from "./Component/ContactUser";
 import PasswordUser from "./Component/PasswordUser";
 import AddressUser from "./Component/AddressUser";
 
-const Signup = () => {
+const Signup = ({ setScreen }) => {
   const [userDetail, setUserDetail] = useState({
     username: "",
     contactNumber: "",
@@ -44,6 +44,12 @@ const Signup = () => {
           />
         )}
       </div>
+      <p className="text-center">
+        Already have an account?{" "}
+        <span className="cursor-pointer" onClick={() => setScreen(true)}>
+          Login
+        </span>{" "}
+      </p>
     </div>
   );
 };
