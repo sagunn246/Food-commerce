@@ -1,4 +1,4 @@
-import SecureFetch from "./apiConfiguration";
+import SecureFetch from "./ApiConfiguration";
 
 const signApi = async (
   userDetail,

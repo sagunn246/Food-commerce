@@ -1,6 +1,6 @@
-import SecureFetch from "../Auth/apiConfiguration";
+import SecureFetch from "./ApiConfiguration";
 
-const changeuserPassword = async (updatedData) => {
+const changeuserPassword = async (updatedData, setError) => {
   console.log(updatedData);
 
   try {
@@ -16,6 +16,9 @@ const changeuserPassword = async (updatedData) => {
     if (request.ok) {
       alert("pass Changed");
       console.log("Pass changed");
+      setError("");
+    } else if (request.status == 200) {
+      setError("Password doesn't match");
     } else {
       console.log("Pass no change");
     }

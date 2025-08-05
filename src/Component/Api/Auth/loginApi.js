@@ -1,4 +1,4 @@
-import SecureFetch from "./apiConfiguration";
+import SecureFetch from "./ApiConfiguration";
 
 const loginApi = async (userDetail, setUser) => {
   try {
@@ -23,7 +23,6 @@ const loginApi = async (userDetail, setUser) => {
 
       if (setUser) setUser({ token, ...user });
 
-      // ✅ Navigate using full reload
       window.location.href = "/";
     } else {
       console.error("Login failed: Invalid token or user data.", response);

@@ -1,4 +1,4 @@
-import React, { useRef } from "react";
+import React, { useRef, useState } from "react";
 import TextInput from "../../InputFields/TextInput";
 import OrangeButton from "../../Button/OrangeButton";
 import changeuserPassword from "../../Api/Auth/changePassword";
@@ -7,13 +7,14 @@ const Password = () => {
   const token = localStorage.getItem("token");
   const prevPasswordRef = useRef();
   const currentPasswordRef = useRef();
+  const [err, setError] = useState();
 
   const handleUpdate = () => {
     const updatedData = {
       prevpassword: prevPasswordRef.current?.value,
       currentpassword: currentPasswordRef.current?.value,
     };
-    changeuserPassword(updatedData);
+    changeuserPassword(updatedData, setError);
   };
 
   return (
@@ -36,6 +37,7 @@ const Password = () => {
             ref={currentPasswordRef}
           />
         </div>
+        <p className="text-red-600">{err}</p>
         <div>
           <OrangeButton title={"Update"} onClick={() => handleUpdate()} />
         </div>
